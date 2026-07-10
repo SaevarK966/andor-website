@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AndOr ehf. | Hönnun stjórnkerfa</title>
+<meta name="description" content="AndOr ehf. sérhæfir sig í hönnun stjórnkerfa, stýriteikningum, iðntölvuforritun og skjámyndakerfum. Umboðsaðili mySCADA á Íslandi.">
+<link rel="icon" type="image/svg+xml" href="assets/andor-mark.svg">
+<link rel="stylesheet" href="styles.css">
+<style>
+  html { scroll-behavior: smooth; }
+  body { min-height: 100vh; }
+  @keyframes andorFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+  @keyframes andorSpin { to { transform: rotate(360deg); } }
+  @keyframes andorPulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+  @keyframes andorBlink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: .12; } }
+  @keyframes andorDash { to { stroke-dashoffset: -22; } }
+  @keyframes andorFlow { 0% { transform: translateX(-8px); opacity: 0; } 30% { opacity: .95; } 100% { transform: translateX(14px); opacity: 0; } }
+  @keyframes andorFade { from { opacity: 0; } to { opacity: 1; } }
+  .theme-dark { --nav-bg: rgba(11,18,32,.92); }
+  .theme-light {
+    --bg: #eef3f9; --bg-alt: #e2eaf4; --surface-card: #ffffff; --surface-hover: #f2f6fb;
+    --border: #d3deec; --text-strong: #10192b; --text-body: #1b2840; --text-muted: #5b6b85;
+    --nav-bg: rgba(255,255,255,.85);
+  }
+</style>
+<script>
+  window.__andorLang = (function(){ try { return localStorage.getItem('andorLang') || 'is'; } catch(e){ return 'is'; } })();
+  window.__andorTheme = (function(){ try { return localStorage.getItem('andorTheme') || 'dark'; } catch(e){ return 'dark'; } })();
+  function L(is, en) { return window.__andorLang === 'en' ? en : is; }
+  function TH(d, l) { return window.__andorTheme === 'light' ? l : d; }
+  document.addEventListener('DOMContentLoaded', function(){
+    document.body.classList.add(window.__andorTheme === 'light' ? 'theme-light' : 'theme-dark');
+    document.documentElement.lang = window.__andorLang;
+  });
+</script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="_ds_bundle.js"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<template id="__bundler_thumbnail">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+    <rect width="400" height="400" fill="#0b1220"/>
+    <circle cx="200" cy="200" r="118" fill="#698cd0"/>
+    <path d="M200 120 L262 268 L232 268 L200 190 L168 268 L138 268 Z" fill="#0b1220"/>
+    <rect x="150" y="228" width="100" height="26" fill="#0b1220"/>
+    <text x="200" y="336" font-family="Georgia, serif" font-size="40" font-weight="700" letter-spacing="6" fill="#e8edf5" text-anchor="middle">AndOr</text>
+  </svg>
+</template>
+
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="chrome.jsx"></script>
+<script type="text/babel" src="home-page.jsx"></script>
+<script type="text/babel" src="pages.jsx"></script>
+<script type="text/babel" src="contact-page.jsx"></script>
+
+<script type="text/babel">
+  const W = window.AndOrWebsite;
+  const { useTweaks, TweaksPanel, TweakSection, TweakRadio, TweakSlider } = window;
+
+  const FX_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "motion": "tilt",
+    "tilt": 30,
+    "glow": 18
+  }/*EDITMODE-END*/;
+
+  function Site() {
+    const [page, setPage] = React.useState("heim");
+    const [lang, setLang] = React.useState(window.__andorLang);
+    const [theme, setTheme] = React.useState(window.__andorTheme);
+    const [t, setTweak] = useTweaks(FX_DEFAULTS);
+    window.__andorLang = lang;
+    window.__andorTheme = theme;
+
+    React.useEffect(() => {
+      document.body.classList.toggle("theme-light", theme === "light");
+      document.body.classList.toggle("theme-dark", theme !== "light");
+      document.documentElement.lang = lang;
+    }, [theme, lang]);
+
+    const onNav = (p) => { setPage(p); window.scrollTo({ top: 0, behavior: "instant" }); };
+    const toggleLang = () => { const n = lang === "is" ? "en" : "is"; try { localStorage.setItem("andorLang", n); } catch (e) {} window.__andorLang = n; setLang(n); };
+    const toggleTheme = () => { const n = theme === "dark" ? "light" : "dark"; try { localStorage.setItem("andorTheme", n); } catch (e) {} window.__andorTheme = n; setTheme(n); };
+    const fx = { effect: t.motion, tilt: t.tilt, glow: t.glow };
+
+    let view;
+    if (page === "heim") view = <W.HomePage onNav={onNav} fx={fx} />;
+    else if (page === "stjornkerfi") view = <W.StjornkerfiPage onNav={onNav} />;
+    else if (page === "verkefni") view = <W.VerkefniPage onNav={onNav} />;
+    else if (page === "myscada") view = <W.ScadaPage onNav={onNav} />;
+    else if (page === "um") view = <W.UmPage onNav={onNav} fx={fx} />;
+    else if (page === "samband") view = <W.ContactPage />;
+
+    return (
+      <div>
+        <W.Navbar page={page} onNav={onNav} lang={lang} theme={theme} onToggleLang={toggleLang} onToggleTheme={toggleTheme} />
+        {view}
+        <W.Footer />
+        <TweaksPanel>
+          <TweakSection label={L("AndOr merki · hetjureitur", "AndOr mark · hero")} />
+          <TweakRadio label={L("Hreyfing", "Motion")} value={t.motion} options={["tilt", "float", "off"]} onChange={(v) => setTweak("motion", v)} />
+          <TweakSlider label={L("Halli", "Tilt")} value={t.tilt} min={0} max={30} unit="°" onChange={(v) => setTweak("tilt", v)} />
+          <TweakSlider label={L("Ljómi", "Glow")} value={t.glow} min={0} max={120} unit="px" onChange={(v) => setTweak("glow", v)} />
+        </TweaksPanel>
+      </div>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById("root")).render(<Site />);
+</script>
+</body>
+</html>

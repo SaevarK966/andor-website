@@ -1,0 +1,42 @@
+/* ============================================================
+   AndOr — Spacing, radius, border, shadow & motion tokens
+   ============================================================ */
+:root {
+  /* ---- Spacing scale ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 22px;
+  --space-6: 26px;
+  --space-7: 34px;
+  --space-8: 42px;
+  --space-9: 70px;   /* section vertical rhythm */
+
+  /* ---- Layout ---- */
+  --container:    1100px; /* @kind spacing */
+  --nav-height:   64px;   /* @kind spacing */
+  --section-pad:  70px;   /* @kind spacing */
+
+  /* ---- Radius ---- */
+  --radius-sm:   8px;    /* buttons */
+  --radius-md:   10px;   /* icon chips, inputs */
+  --radius-lg:   12px;   /* cards */
+  --radius-xl:   16px;   /* feature / team cards */
+  --radius-pill: 99px;   /* tags, chips */
+
+  /* ---- Borders ---- */
+  --border-width: 1px; /* @kind spacing */
+  --border-line:  var(--border-width) solid var(--border);
+
+  /* ---- Shadows ---- */
+  --shadow-card: 0 0 20px rgba(79,159,216,.25), 0 0 60px rgba(79,159,216,.10);
+  --shadow-soft: 0 8px 24px rgba(0,0,0,.35);
+
+  /* ---- Motion ---- */
+  --ease:         cubic-bezier(.4, 0, .2, 1); /* @kind other */
+  --dur-fast:     0.15s; /* @kind other */
+  --dur-med:      0.25s; /* @kind other */
+  --dur-slow:     0.6s;  /* @kind other */
+  --transition:   all 0.15s ease; /* @kind other */
+}

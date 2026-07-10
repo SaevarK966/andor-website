@@ -1,0 +1,53 @@
+/* ============================================================
+   AndOr — Color tokens
+   Derived from the AndOr website (assets/styles.css).
+   Dark navy surfaces + a single blue brand accent.
+   ============================================================ */
+:root {
+  /* ---- Brand ---- */
+  --andor-blue:        #4f9fd8;  /* primary brand accent */
+  --andor-blue-strong: #3d8cc5;  /* hover / pressed accent */
+  --andor-blue-ink:    #0b1220;  /* the "A" knocked out of the blue mark */
+
+  /* ---- Raw surface ramp (darkest → lightest) ---- */
+  --navy-900: #0b1220;  /* page background */
+  --navy-850: #101a2e;  /* alt background band */
+  --navy-800: #16223a;  /* card surface */
+  --navy-750: #1b2a47;  /* card hover */
+  --navy-700: #233452;  /* lines / borders */
+
+  /* ---- Raw text ramp ---- */
+  --ink-100: #e8edf5;  /* primary text */
+  --ink-300: #9db0cc;  /* muted / secondary text */
+
+  /* ---- Accent washes ---- */
+  --andor-blue-soft:   rgba(79,159,216,.12);  /* tinted fills, icon chips */
+  --andor-blue-border: rgba(79,159,216,.30);  /* tinted borders */
+  --andor-glow:        rgba(79,159,216,.25);  /* hover glow */
+
+  /* ---- Semantic status (harmonised with the navy palette) ---- */
+  --status-ok:    #5fc08a;
+  --status-warn:  #e6b860;
+  --status-error: #e06a6a;
+  --status-info:  var(--andor-blue);
+
+  /* ============================================================
+     Semantic aliases — prefer these in components
+     ============================================================ */
+  --bg:            var(--navy-900);
+  --bg-alt:        var(--navy-850);
+  --surface-card:  var(--navy-800);
+  --surface-hover: var(--navy-750);
+  --border:        var(--navy-700);
+  --border-strong: var(--andor-blue);
+
+  --text-strong:   var(--ink-100);
+  --text-body:     var(--ink-100);
+  --text-muted:    var(--ink-300);
+  --text-accent:   var(--andor-blue);
+  --text-on-accent:#ffffff;
+
+  --accent:        var(--andor-blue);
+  --accent-hover:  var(--andor-blue-strong);
+  --accent-soft:   var(--andor-blue-soft);
+}

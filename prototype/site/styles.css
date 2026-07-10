@@ -1,0 +1,63 @@
+/* ============================================================
+   AndOr Design System — global entry point
+   Consumers link THIS file. Import-list only.
+   ============================================================ */
+@import "tokens/colors.css";
+@import "tokens/typography.css";
+@import "tokens/spacing.css";
+@import "tokens/base.css";
+
+/* Prototype-only responsive helpers. The production build should keep these
+   behaviours in real components rather than relying on inline-style overrides. */
+.site-nav__toggle,
+.site-nav__mobile {
+  display: none;
+}
+
+@media (max-width: 860px) {
+  .site-nav__desktop {
+    display: none !important;
+  }
+
+  .site-nav__toggle {
+    display: inline-flex !important;
+  }
+
+  .site-nav__mobile.is-open {
+    display: flex;
+  }
+
+  .home-hero-layout {
+    gap: 30px !important;
+  }
+
+  .home-hero-copy,
+  .home-hero-art {
+    flex: 1 1 100% !important;
+    min-width: 0 !important;
+  }
+
+  .home-hero-title span {
+    white-space: normal !important;
+  }
+
+  .contact-layout,
+  .hmi-layout {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .panel-sizes {
+    flex-wrap: wrap !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
