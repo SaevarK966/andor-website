@@ -1,99 +1,90 @@
 # Project status — AndOr website
 
-Updated: 2026-07-10
+Updated: 2026-07-11
 
 ## Executive status
 
-**Prototype-complete, launch-incomplete.**
+**First production milestone complete, launch-incomplete.**
 
-The handoff contains a strong high-fidelity redesign with six views, Icelandic and English copy, dark/light themes, a project gallery, product content and an interactive HMI demo. It is a much stronger content and design direction than the current public Wix site.
+The Astro 7 + TypeScript production site now has a complete bilingual home page, real localized routes, responsive navigation, persistent dark/light themes, page metadata, structured data and a generated sitemap. Type and production builds pass, and the work is tracked in GitHub through a draft pull request.
 
-It is not a production codebase yet. There was no Git repository, package manifest, lockfile, build, test suite, CI or deployment configuration when the audit began.
+The remaining subpages are deliberately thin `noindex` route scaffolds. The site must not be launched until their content, the contact/privacy flow and the unresolved company and asset-rights facts are completed.
 
 ## Workspace decisions
 
 - The authoritative working folder is `C:\Users\saeva\Desktop\AndOr-Website-Handoff-ClaudeCowork`.
-- The similarly named OneDrive folder is an empty unborn Git shell and is not source.
-- The current handoff is preserved externally in `C:\Users\saeva\Desktop\AndOr Design System.zip`.
-- Documentation now lives in `docs/`; the review build lives in `prototype/`.
-- The repository root is the future production project root.
+- The similarly named OneDrive folder is not the source repository.
+- Documentation lives in `docs/`; the design reference lives in `prototype/`.
+- `src/` and `public/` contain only the production app and approved brand assets.
+- Raw project screenshots remain local-only and are excluded from Git and the production site.
 
-## Verified prototype behaviour
+## Completed production milestone
 
-- All six views render and active local asset references load.
-- Icelandic/English switching works and persists.
-- Dark/light theme switching works and persists.
-- The HMI start/stop interaction works.
-- All views now avoid horizontal document overflow at a 390 px viewport.
-- A real mobile menu now replaces the full desktop navigation below 860 px.
-- Contact and HMI layouts collapse to one column on narrow screens.
-- myPANEL size diagrams wrap on narrow screens.
-- The dark-theme border token collision was fixed.
-- The About view now has an H1.
-
-These fixes improve the review prototype; they do not turn it into production code.
+- Astro 7 + TypeScript project with lockfile, type checks and static production build.
+- Full Icelandic and English home pages at `/` and `/en/`.
+- Stable bilingual routes for Control systems, Projects, mySCADA, About and Contact.
+- Direct equivalent-page language links, refresh and browser-history-safe navigation.
+- Responsive, JavaScript-off-safe mobile navigation with Escape and focus return.
+- Persistent dark/light themes, accessible focus styles, AA-safe control contrast and reduced-motion support.
+- Unique page titles and descriptions, canonicals, IS/EN/x-default alternates, Open Graph metadata and Organization JSON-LD.
+- `robots.txt`, launch-gated indexing and a sitemap restricted to completed indexed pages.
+- Code-native HMI demonstration on the home page; no customer screenshots, partner logos or detailed control drawings are published.
+- The unverified hard-coded “Öll kerfi í lagi” claim has been removed.
 
 ## Current launch blockers
 
-### Production engineering
+### Remaining pages and engineering
 
-- React development builds and Babel are downloaded from UNPKG and JSX is transpiled in each visitor's browser.
-- `_ds_bundle.js` contains design-system components, duplicate site code and stale legacy scripts.
-- Navigation is React state plus `href="#"`; there are no real URLs, deep links, Back/Forward history or per-page HTML.
-- There is one global title/description and no canonical, Open Graph, hreflang, sitemap, robots or structured business data for the redesign.
-- Copy is duplicated between Markdown, JSX, the generated bundle and the standalone preview.
-- No automated tests, build checks, preview deployment or security headers exist.
+- Complete the bilingual Control systems and mySCADA pages, followed by Projects, About and Contact.
+- Add bilingual privacy and 404 pages plus a redirect map from valuable legacy URLs.
+- Add a real formatter/linter, automated browser checks, CI and production security headers.
+- Produce and approve a dedicated 1200 × 630 social preview image.
+- Keep `prototype/` isolated as a reference; it is not part of the production runtime.
 
 ### Forms and privacy
 
-- The contact form does not send anything; it only changes to a success message.
-- A real endpoint, error handling, validation, spam protection and a bilingual privacy notice are required.
-- A data-retention and processor decision is needed before collecting enquiries.
+- The contact route does not yet collect or send enquiries.
+- Select an endpoint and add server-side validation, honest states, spam protection and a bilingual privacy notice.
+- Decide retention and processor responsibilities before collecting personal data.
 
 ### Rights and sensitive imagery
 
-- The six SCADA screenshots contain real operational screens, zone/room names, dates/times and at least one logged-in identifier.
-- Obtain written customer permission and publish sanitized copies with identifying and operational details replaced.
-- Confirm rights for partner logos, mySCADA product material and all staff photos.
-- Keep an asset-rights register before launch.
+- Real SCADA screenshots contain operational or identifying details and remain excluded.
+- Partner/customer logos and the detailed control drawing remain withheld until relationship, ownership and publication permission are recorded.
+- mySCADA product imagery, staff photos and any future project media need an asset-rights register before launch.
 
-### Accessibility and honest claims
+### Company address conflict
 
-- Primary white text on the current blue button and light-theme blue text on white do not meet WCAG AA contrast for normal text.
-- The language menu, lightbox focus handling and HMI live announcements need production-grade keyboard/screen-reader work.
-- Continuous animations must respect reduced motion in the production build.
-- Replace the hard-coded “Öll kerfi í lagi” message unless it is connected to a real status source.
+- The public website and mySCADA distributor listing show **Glerárgata 32, 600 Akureyri**.
+- A newer company-record source shows **Eikarlundur 11, 600 Akureyri** as legal/HQ address.
+- The current production copy labels Glerárgata as the office and omits an address from JSON-LD. Confirm the office, legal address and map destination before launch.
 
-### Performance
+### Accessibility and performance follow-up
 
-- The standalone preview is about 15.5 MB and is a generated artifact.
-- Prototype assets are about 5.5 MB; several photos and SCADA PNGs can be significantly reduced with responsive AVIF/WebP output.
-- Add intrinsic sizes, lazy loading and responsive image sources.
+- The production shell now covers keyboard navigation, visible focus, landmarks, direct language links, contrast and reduced motion.
+- Any future lightbox or interactive HMI must add modal focus management and useful, quiet live announcements.
+- The production home page is static and lightweight. The 15.5 MB prototype remains a review artifact; future content images still need responsive optimization, intrinsic dimensions and lazy loading.
 
 ## Public-site comparison
 
-The current [andor.is](https://www.andor.is/) has useful technical content but is visually dated and severely broken on mobile. At 390 px it rendered a 1,032 px-wide layout. It also lacks H1 on most pages, uses `lang="en"` for Icelandic content, has no meta descriptions, contains leftover template wording and offers weak conversion paths.
+The current [andor.is](https://www.andor.is/) contains useful technical material but has an older presentation and weak mobile behaviour. The redesign preserves the clear separation between control systems and mySCADA while improving hierarchy, navigation, accessibility and conversion paths.
 
-Worth preserving from the existing site:
+Worth carrying forward after fact and rights review:
 
-- Clear separation between control systems and the mySCADA product family.
-- Siemens/mySCADA specialization and the ventilation, fire-damper, pool and KNX/DALI service categories.
-- Existing technical proof in videos and real HMI material, after permissions and sanitization.
+- Siemens/mySCADA capability wording and the ventilation, fire-damper, pool and KNX/DALI service categories.
+- Technical proof in videos and real HMI material after sanitization and written approval.
 - Company identity, legal details and the line “Vinnum saman að betri lausnum!”
 
-## Recommended production architecture
+## Production architecture
 
-Use Astro + TypeScript, generating static HTML for each page and language. Keep React only where interaction earns its cost.
+Use Astro + TypeScript to generate static HTML for each page and language. Keep client-side JavaScript small and use React only if an interactive feature clearly requires it.
 
 ```text
 src/
   components/
     layout/
-    ui/
-    interactive/
-  content/
-    is.ts
-    en.ts
+    pages/
+  i18n/
   layouts/
   pages/
     index.astro
@@ -104,37 +95,12 @@ src/
     hafa-samband.astro
     en/
   styles/
-    tokens.css
-    global.css
 public/
-  images/
-  icons/
-tests/
-  e2e/
+  images/brand/
 docs/
 prototype/
 ```
 
-Useful primary documentation:
+## Next milestone
 
-- [Why Astro](https://docs.astro.build/en/concepts/why-astro/)
-- [Astro project structure](https://docs.astro.build/en/basics/project-structure/)
-- [Astro i18n routing](https://docs.astro.build/en/reference/modules/astro-i18n/)
-
-## Recommended information architecture
-
-- Forsíða / Home
-- Lausnir / Solutions
-  - Stjórnkerfi og iðnaðarstýringar
-  - Loftræsing, brunalokur og húskerfi
-  - Sundlaugar og pottakerfi
-  - KNX / DALI
-- mySCADA
-  - Product overview and comparison
-  - myBOX, myPANEL and relevant software
-- Verkefni / Projects
-- Um AndOr / About
-- Hafa samband / Contact
-- Persónuvernd / Privacy
-
-The first production milestone is a real routed shell plus the home page in both languages, with design tokens, responsive navigation, metadata and automated viewport checks.
+Finish the Control systems and mySCADA pages in both languages, including approved technical copy and product assets. Then complete Projects, About, Contact, Privacy, 404 and redirects before enabling public indexing.

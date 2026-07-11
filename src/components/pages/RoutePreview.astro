@@ -1,0 +1,175 @@
+---
+import {
+  company,
+  contentFor,
+  routePath,
+  type Locale,
+  type RouteKey,
+} from '../../i18n/site';
+
+interface Props {
+  locale: Locale;
+  route: Exclude<RouteKey, 'home'>;
+}
+
+const { locale, route } = Astro.props;
+const t = contentFor(locale);
+const page = t.pages[route];
+const isContact = route === 'contact';
+---
+
+<section class="page-hero">
+  <div class="page-hero__grid" aria-hidden="true"></div>
+  <div class="container page-hero__layout">
+    <div class="page-hero__copy">
+      <p class="kicker">{page.tag}</p>
+      <h1>{page.title}</h1>
+      <p>{page.intro}</p>
+      {
+        !isContact && (
+          <a class="button" href={routePath('contact', locale)}>
+            {t.common.nav.contact}<span class="arrow" aria-hidden="true">→</span>
+          </a>
+        )
+      }
+    </div>
+
+    <aside class="contact-panel" aria-label={locale === 'is' ? 'Samskiptaupplýsingar' : 'Contact details'}>
+      <div class="contact-panel__mark" aria-hidden="true">
+        <img src="/images/brand/andor-mark.svg" width="80" height="92" alt="" />
+      </div>
+      <a href={`mailto:${company.email}`}>
+        <span>{locale === 'is' ? 'Netfang' : 'Email'}</span>
+        <strong>{company.email}</strong>
+      </a>
+      <a href={company.phoneHref}>
+        <span>{t.common.phoneLabel}</span>
+        <strong>{company.phoneDisplay}</strong>
+      </a>
+      <a href={company.mapsHref} target="_blank" rel="noopener noreferrer">
+        <span>{t.common.officeLabel}</span>
+        <strong>{company.office}</strong>
+      </a>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    position: relative;
+    overflow: hidden;
+    min-height: calc(100svh - var(--nav-height));
+    background:
+      radial-gradient(circle at 78% 24%, rgba(79, 159, 216, 0.15), transparent 30rem),
+      var(--bg);
+  }
+
+  .page-hero__grid {
+    position: absolute;
+    inset: 0;
+    opacity: 0.26;
+    background-image:
+      linear-gradient(var(--border-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border-line) 1px, transparent 1px);
+    background-size: 3.5rem 3.5rem;
+    mask-image: linear-gradient(90deg, transparent, black 52%, transparent);
+  }
+
+  .page-hero__layout {
+    position: relative;
+    display: grid;
+    min-height: calc(100svh - var(--nav-height));
+    grid-template-columns: minmax(0, 1.25fr) minmax(18rem, 0.75fr);
+    gap: clamp(3rem, 9vw, 7rem);
+    align-items: center;
+    padding-block: clamp(5rem, 12vw, 9rem);
+  }
+
+  .page-hero__copy {
+    max-width: 48rem;
+  }
+
+  .page-hero h1 {
+    margin-bottom: 1.35rem;
+    font-size: var(--fs-h1);
+    letter-spacing: var(--ls-tight);
+    line-height: var(--lh-tight);
+    text-wrap: balance;
+  }
+
+  .page-hero__copy > p:not(.kicker) {
+    max-width: 44rem;
+    margin-bottom: 2rem;
+    color: var(--text-muted);
+    font-size: var(--fs-lead);
+  }
+
+  .contact-panel {
+    display: grid;
+    overflow: hidden;
+    border: 1px solid var(--andor-blue-border);
+    border-radius: var(--radius-xl);
+    background: color-mix(in srgb, var(--surface-card) 94%, transparent);
+    box-shadow: var(--shadow-card);
+  }
+
+  .contact-panel__mark {
+    display: grid;
+    min-height: 9rem;
+    place-items: center;
+    border-bottom: 1px solid var(--border-line);
+    background:
+      radial-gradient(circle, rgba(79, 159, 216, 0.2), transparent 68%),
+      var(--bg-alt);
+  }
+
+  .contact-panel__mark img {
+    width: 4rem;
+    height: auto;
+    filter: drop-shadow(0 0 1.6rem rgba(79, 159, 216, 0.48));
+  }
+
+  .contact-panel > a {
+    display: grid;
+    gap: 0.08rem;
+    border-bottom: 1px solid var(--border-line);
+    padding: 1rem 1.2rem;
+    transition: background var(--dur-fast) var(--ease);
+  }
+
+  .contact-panel > a:last-child {
+    border-bottom: 0;
+  }
+
+  .contact-panel > a:hover {
+    background: var(--accent-soft);
+  }
+
+  .contact-panel span {
+    color: var(--text-muted);
+    font-size: 0.74rem;
+  }
+
+  .contact-panel strong {
+    overflow-wrap: anywhere;
+    color: var(--text-strong);
+    font-size: 0.94rem;
+  }
+
+  @media (max-width: 48rem) {
+    .page-hero,
+    .page-hero__layout {
+      min-height: auto;
+    }
+
+    .page-hero__layout {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      padding-block: 4.5rem;
+    }
+
+    .contact-panel {
+      max-width: 32rem;
+    }
+  }
+</style>

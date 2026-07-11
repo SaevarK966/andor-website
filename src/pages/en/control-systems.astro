@@ -1,0 +1,11 @@
+---
+import RoutePreview from '../../components/pages/RoutePreview.astro';
+import { pageContent } from '../../i18n/site';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const page = pageContent.en.controlSystems;
+---
+
+<BaseLayout locale="en" route="controlSystems" title={`${page.title} | AndOr`} description={page.meta} noindex>
+  <RoutePreview locale="en" route="controlSystems" />
+</BaseLayout>

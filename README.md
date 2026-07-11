@@ -2,7 +2,7 @@
 
 Vinnusvæði fyrir nýjan production-vef AndOr ehf.
 
-**Staða:** hágæða frumgerð og efnisgrunnur eru til. Astro-production-grunnurinn er tengdur, en enn þarf að porta hönnunina úr `prototype/` yfir í raunverulegar Astro-síður áður en vefurinn er tilbúinn í loftið.
+**Staða:** fyrsti production-áfanginn er tilbúinn. Forsíðan er komin í Astro á íslensku og ensku með raunverulegum slóðum, responsive valmynd, ljósu/dökku þema, metadata og sitemap. Undirsíðurnar eru enn efnisgrunnar og haldast `noindex` þar til þær eru fullunnar.
 
 ## Uppsetning
 
@@ -38,9 +38,11 @@ Vinnusvæði fyrir nýjan production-vef AndOr ehf.
 ```powershell
 npm install
 npm run dev
+npm run check
+npm run build
 ```
 
-Astro keyrir sjálfgefið á `http://localhost:4321`.
+Astro keyrir sjálfgefið á `http://localhost:4321`. Allar síður haldast `noindex` nema `PUBLIC_SITE_LIVE=true` sé sérstaklega sett við launch.
 
 ## Forskoða frumgerðina
 
@@ -63,4 +65,4 @@ Ekki opna `prototype/site/index.html` beint með `file://`; JSX-skrárnar eru s�
 
 ## Næsta tæknilega skref
 
-Porta design tokens, responsive navigation og forsíðuna í Astro + TypeScript með raunverulegum íslenskum og enskum slóðum. React verður aðeins notað fyrir gagnvirku HMI-sýninguna, ljósmyndagallerí og aðra litla islands.
+Fullvinna `Stjórnkerfi` og `mySCADA`, síðan `Verkefni`, `Um AndOr` og `Hafa samband`. Eftir það þarf persónuverndarsíðu, 404-síðu og redirect-kort fyrir gömlu slóðirnar. React verður aðeins notað ef gagnvirka HMI-sýningin þarfnast þess; venjulegt efni og leiðarkerfi haldast í Astro.

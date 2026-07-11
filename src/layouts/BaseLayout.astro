@@ -1,0 +1,109 @@
+---
+import SiteFooter from '../components/layout/SiteFooter.astro';
+import SiteHeader from '../components/layout/SiteHeader.astro';
+import {
+  alternateLocale,
+  company,
+  contentFor,
+  routePath,
+  type Locale,
+  type RouteKey,
+} from '../i18n/site';
+import '../styles/global.css';
+
+interface Props {
+  locale: Locale;
+  route: RouteKey;
+  title: string;
+  description: string;
+  noindex?: boolean;
+}
+
+const { locale, route, title, description, noindex = false } = Astro.props;
+const siteUrl = Astro.site ?? new URL('https://www.andor.is');
+const canonicalUrl = new URL(routePath(route, locale), siteUrl);
+const otherLocale = alternateLocale[locale];
+const otherUrl = new URL(routePath(route, otherLocale), siteUrl);
+const defaultUrl = new URL(routePath(route, 'is'), siteUrl);
+const siteIsLive = import.meta.env.PUBLIC_SITE_LIVE === 'true';
+const robots = siteIsLive && !noindex ? 'index, follow' : 'noindex, nofollow';
+const common = contentFor(locale).common;
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': new URL('/#organization', siteUrl).href,
+  name: company.name,
+  url: siteUrl.href,
+  logo: new URL('/images/brand/andor-mark.svg', siteUrl).href,
+  email: company.email,
+  telephone: '+3548408168',
+  foundingDate: company.founded,
+  areaServed: {
+    '@type': 'Country',
+    name: 'Iceland',
+  },
+  description,
+};
+---
+
+<!doctype html>
+<html lang={locale} data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b1220" data-theme-color />
+    <script is:inline>
+      (() => {
+        document.documentElement.classList.add('js');
+        let theme = 'dark';
+        try {
+          const saved = localStorage.getItem('andor-theme');
+          if (saved === 'light' || saved === 'dark') {
+            theme = saved;
+          } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+            theme = 'light';
+          }
+        } catch {
+          theme = 'dark';
+        }
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+        document.querySelector('[data-theme-color]')?.setAttribute(
+          'content',
+          theme === 'light' ? '#eef3f9' : '#0b1220',
+        );
+      })();
+    </script>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang={locale} href={canonicalUrl} />
+    <link rel="alternate" hreflang={otherLocale} href={otherUrl} />
+    <link rel="alternate" hreflang="x-default" href={defaultUrl} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="icon" type="image/svg+xml" href="/images/brand/andor-mark.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="AndOr" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content={locale === 'is' ? 'is_IS' : 'en_GB'} />
+    <meta property="og:locale:alternate" content={locale === 'is' ? 'en_GB' : 'is_IS'} />
+    <meta name="twitter:card" content="summary" />
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify(organizationSchema).replace(/</g, '\\u003c')}
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">{common.skipToContent}</a>
+    <SiteHeader locale={locale} currentRoute={route} />
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+    <SiteFooter locale={locale} />
+  </body>
+</html>
