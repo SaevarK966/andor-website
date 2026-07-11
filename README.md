@@ -1,46 +1,68 @@
-# Astro Starter Kit: Basics
+# AndOr website
 
-```sh
-npm create astro@latest -- --template basics
-```
+Vinnusvæði fyrir nýjan production-vef AndOr ehf.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+**Staða:** fyrsti production-áfanginn er tilbúinn. Forsíðan er komin í Astro á íslensku og ensku með raunverulegum slóðum, responsive valmynd, ljósu/dökku þema, metadata og sitemap. Undirsíðurnar eru enn efnisgrunnar og haldast `noindex` þar til þær eru fullunnar.
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+## Uppsetning
 
 ```text
-/
+.
+├── AGENTS.md
+├── package.json              # Astro production app
+├── astro.config.mjs
 ├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+├── src/
+│   ├── components/
+│   ├── layouts/
+│   └── pages/
+├── docs/
+│   ├── CONTENT.md
+│   ├── DESIGN-SPEC.md
+│   ├── HANDOFF.md
+│   ├── LAUNCH-CHECKLIST.md
+│   └── PROJECT-STATUS.md
+└── prototype/
+    ├── Forsyning-AndOr-vefur.html
+    └── site/
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+- `src/` og `public/` eru production-kóðinn sem verður settur í loftið.
+- `docs/` geymir samþykkt efni, hönnunarkerfi, stöðu og útgáfugátlista.
+- `prototype/site/` er gagnvirka React/Babel-frumgerðin sem er notuð til að sannreyna útlit og hegðun.
+- `prototype/Forsyning-AndOr-vefur.html` er stór, sjálfstæð handoff-forskoðun. Hún er mynduð skrá og getur orðið á eftir `prototype/site/`.
+- Frumgerðin verður áfram varðveitt þar til sjónræn samsvörun við production-buildið hefur verið staðfest.
 
-## 🧞 Commands
+## Keyra production-grunninn
 
-All commands are run from the root of the project, from a terminal:
+```powershell
+npm install
+npm run dev
+npm run check
+npm run build
+```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+Astro keyrir sjálfgefið á `http://localhost:4321`. Allar síður haldast `noindex` nema `PUBLIC_SITE_LIVE=true` sé sérstaklega sett við launch.
 
-## 👀 Want to learn more?
+## Forskoða frumgerðina
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Frá rót verkefnisins:
+
+```powershell
+python -m http.server 4173 --bind 127.0.0.1
+```
+
+Opna síðan `http://127.0.0.1:4173/prototype/site/`.
+
+Ekki opna `prototype/site/index.html` beint með `file://`; JSX-skrárnar eru sóttar yfir HTTP.
+
+## Byrja hér
+
+1. Lesa [docs/PROJECT-STATUS.md](docs/PROJECT-STATUS.md).
+2. Nota [docs/CONTENT.md](docs/CONTENT.md) sem efnisheimild og halda íslensku og ensku samhliða.
+3. Nota [docs/DESIGN-SPEC.md](docs/DESIGN-SPEC.md) fyrir hönnunartóka og komponenta.
+4. Fylgja [docs/LAUNCH-CHECKLIST.md](docs/LAUNCH-CHECKLIST.md) áður en vefurinn fer í loftið.
+
+## Næsta tæknilega skref
+
+Fullvinna `Stjórnkerfi` og `mySCADA`, síðan `Verkefni`, `Um AndOr` og `Hafa samband`. Eftir það þarf persónuverndarsíðu, 404-síðu og redirect-kort fyrir gömlu slóðirnar. React verður aðeins notað ef gagnvirka HMI-sýningin þarfnast þess; venjulegt efni og leiðarkerfi haldast í Astro.

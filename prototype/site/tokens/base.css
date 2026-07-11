@@ -1,0 +1,22 @@
+/* ============================================================
+   AndOr — Base / reset
+   Minimal element defaults so specimens & components render
+   on-brand out of the box.
+   ============================================================ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text-body);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-decoration: none; }
+img { max-width: 100%; }
+
+h1, h2, h3, h4 { letter-spacing: var(--ls-tight); line-height: var(--lh-snug); }
+
+::selection { background: var(--andor-blue-soft); color: var(--text-strong); }

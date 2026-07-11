@@ -1,0 +1,117 @@
+---
+import { company, contentFor, routePath, type Locale } from '../../i18n/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = contentFor(locale).common;
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="footer-brand">
+      <a href={routePath('home', locale)} aria-label="AndOr ehf.">
+        <img src="/images/brand/andor-mark.svg" width="34" height="39" alt="" />
+        <strong>AndOr</strong>
+      </a>
+      <span>{t.tagline}</span>
+    </div>
+
+    <div class="footer-contact">
+      <a href={`mailto:${company.email}`}>{company.email}</a>
+      <a href={company.phoneHref}>{t.phoneLabel}: {company.phoneDisplay}</a>
+      <a href={company.mapsHref} target="_blank" rel="noopener noreferrer">
+        {t.officeLabel}: {company.office}
+      </a>
+    </div>
+
+    <p class="footer-legal">© {year} {company.name} · kt. {company.registrationNumber}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--border-line);
+    background: var(--navy-900);
+    color: var(--ink-300);
+  }
+
+  :global(:root[data-theme='light']) .site-footer {
+    background: #dce6f2;
+    color: var(--text-muted);
+  }
+
+  .site-footer__inner {
+    display: grid;
+    grid-template-columns: minmax(10rem, 0.8fr) minmax(16rem, 1.4fr);
+    gap: 1.6rem 2.5rem;
+    align-items: start;
+    padding-block: 2.75rem;
+  }
+
+  .footer-brand {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .footer-brand a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--text-strong);
+    font-size: 1.15rem;
+    width: fit-content;
+  }
+
+  .footer-brand img {
+    width: 1.7rem;
+    height: 2rem;
+    object-fit: contain;
+  }
+
+  .footer-brand span,
+  .footer-legal {
+    font-size: var(--fs-xs);
+  }
+
+  .footer-contact {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.45rem 1.2rem;
+    font-size: var(--fs-sm);
+  }
+
+  .footer-contact a {
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.2rem;
+    transition: color var(--dur-fast) var(--ease), text-decoration-color var(--dur-fast) var(--ease);
+  }
+
+  .footer-contact a:hover {
+    color: var(--text-accent);
+    text-decoration-color: currentColor;
+  }
+
+  .footer-legal {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border-line);
+  }
+
+  @media (max-width: 48rem) {
+    .site-footer__inner {
+      grid-template-columns: 1fr;
+    }
+
+    .footer-contact {
+      display: grid;
+      justify-content: start;
+    }
+  }
+</style>

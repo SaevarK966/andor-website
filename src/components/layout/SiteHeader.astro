@@ -1,0 +1,466 @@
+---
+import {
+  alternateLocale,
+  contentFor,
+  navItems,
+  routePath,
+  type Locale,
+  type RouteKey,
+} from '../../i18n/site';
+
+interface Props {
+  locale: Locale;
+  currentRoute: RouteKey;
+}
+
+const { locale, currentRoute } = Astro.props;
+const t = contentFor(locale).common;
+const otherLocale = alternateLocale[locale];
+const alternateHref = routePath(currentRoute, otherLocale);
+---
+
+<header class="site-header" data-site-header>
+  <nav class="site-nav container" aria-label={locale === 'is' ? 'Aðalvalmynd' : 'Primary navigation'}>
+    <a class="brand" href={routePath('home', locale)} aria-label="AndOr ehf.">
+      <img class="brand__mark" src="/images/brand/andor-mark.svg" width="42" height="48" alt="" />
+      <span class="brand__wordmarks">
+        <img
+          class="brand__wordmark brand__wordmark--dark-theme"
+          src="/images/brand/andor-wordmark-light.png"
+          width="156"
+          height="47"
+          alt="AndOr"
+        />
+        <img
+          class="brand__wordmark brand__wordmark--light-theme"
+          src="/images/brand/andor-wordmark-dark.png"
+          width="156"
+          height="47"
+          alt="AndOr"
+        />
+      </span>
+    </a>
+
+    <div class="site-nav__desktop">
+      <ul class="nav-links">
+        {
+          navItems.map(({ route }) => (
+            <li>
+              <a
+                href={routePath(route, locale)}
+                aria-current={currentRoute === route ? 'page' : undefined}
+              >
+                {t.nav[route]}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="nav-tools">
+        <a
+          class="language-link"
+          href={alternateHref}
+          hreflang={otherLocale}
+          lang={otherLocale}
+          aria-label={t.language}
+        >
+          <span aria-hidden="true">{t.languageCode}</span>
+        </a>
+        <button
+          class="theme-toggle"
+          type="button"
+          data-theme-toggle
+          data-light-label={t.lightTheme}
+          data-dark-label={t.darkTheme}
+          aria-label={t.lightTheme}
+          aria-pressed="false"
+        >
+          <svg class="theme-toggle__sun" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true">
+            <circle cx="12" cy="12" r="4.25"></circle>
+            <path d="M12 2v2.3M12 19.7V22M2 12h2.3M19.7 12H22M4.9 4.9l1.65 1.65M17.45 17.45l1.65 1.65M19.1 4.9l-1.65 1.65M6.55 17.45 4.9 19.1"></path>
+          </svg>
+          <svg class="theme-toggle__moon" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true">
+            <path d="M21 12.75A9 9 0 1 1 11.25 3 7.2 7.2 0 0 0 21 12.75Z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <button
+      class="nav-toggle"
+      type="button"
+      data-nav-toggle
+      aria-expanded="false"
+      aria-controls="mobile-navigation"
+      aria-label={t.openMenu}
+      data-open-label={t.openMenu}
+      data-close-label={t.closeMenu}
+    >
+      <span class="nav-toggle__lines" aria-hidden="true"><span></span><span></span><span></span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-navigation" id="mobile-navigation" data-mobile-navigation>
+    <div class="container">
+      <ul class="mobile-links">
+        {
+          navItems.map(({ route }) => (
+            <li>
+              <a
+                href={routePath(route, locale)}
+                aria-current={currentRoute === route ? 'page' : undefined}
+              >
+                {t.nav[route]}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="mobile-tools">
+        <a class="language-link language-link--wide" href={alternateHref} hreflang={otherLocale} lang={otherLocale}>
+          <span aria-hidden="true">{t.languageCode}</span>
+          <span>{t.language}</span>
+        </a>
+        <button
+          class="theme-toggle"
+          type="button"
+          data-theme-toggle
+          data-light-label={t.lightTheme}
+          data-dark-label={t.darkTheme}
+          aria-label={t.lightTheme}
+          aria-pressed="false"
+        >
+          <svg class="theme-toggle__sun" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true">
+            <circle cx="12" cy="12" r="4.25"></circle>
+            <path d="M12 2v2.3M12 19.7V22M2 12h2.3M19.7 12H22M4.9 4.9l1.65 1.65M17.45 17.45l1.65 1.65M19.1 4.9l-1.65 1.65M6.55 17.45 4.9 19.1"></path>
+          </svg>
+          <svg class="theme-toggle__moon" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true">
+            <path d="M21 12.75A9 9 0 1 1 11.25 3 7.2 7.2 0 0 0 21 12.75Z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-site-header]');
+
+  if (header && header.dataset.ready !== 'true') {
+    header.dataset.ready = 'true';
+
+    const menuToggle = header.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+    const mobileNavigation = header.querySelector<HTMLElement>('[data-mobile-navigation]');
+
+    const setMenuState = (open: boolean, returnFocus = false) => {
+      if (!menuToggle || !mobileNavigation) return;
+      menuToggle.setAttribute('aria-expanded', String(open));
+      menuToggle.setAttribute(
+        'aria-label',
+        open ? menuToggle.dataset.closeLabel ?? '' : menuToggle.dataset.openLabel ?? '',
+      );
+      mobileNavigation.classList.toggle('is-open', open);
+      document.body.classList.toggle('nav-is-open', open);
+      if (returnFocus) menuToggle.focus();
+    };
+
+    menuToggle?.addEventListener('click', () => {
+      setMenuState(menuToggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    mobileNavigation?.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => setMenuState(false));
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && menuToggle?.getAttribute('aria-expanded') === 'true') {
+        setMenuState(false, true);
+      }
+    });
+
+    window.matchMedia('(min-width: 64rem)').addEventListener('change', (event) => {
+      if (event.matches) setMenuState(false);
+    });
+
+    const themeButtons = header.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]');
+
+    const refreshThemeButtons = () => {
+      const light = document.documentElement.dataset.theme === 'light';
+      themeButtons.forEach((button) => {
+        button.setAttribute('aria-pressed', String(light));
+        button.setAttribute(
+          'aria-label',
+          light ? button.dataset.darkLabel ?? '' : button.dataset.lightLabel ?? '',
+        );
+      });
+    };
+
+    themeButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const nextTheme = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+        document.documentElement.dataset.theme = nextTheme;
+        document.documentElement.style.colorScheme = nextTheme;
+        document.querySelector('[data-theme-color]')?.setAttribute(
+          'content',
+          nextTheme === 'light' ? '#eef3f9' : '#0b1220',
+        );
+        try {
+          localStorage.setItem('andor-theme', nextTheme);
+        } catch {
+          // Theme still works when storage is blocked.
+        }
+        refreshThemeButtons();
+      });
+    });
+
+    refreshThemeButtons();
+  }
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--border-line);
+    background: var(--nav-bg);
+    backdrop-filter: blur(16px);
+  }
+
+  .site-nav {
+    min-height: var(--nav-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .brand {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    gap: 0.65rem;
+    flex: none;
+  }
+
+  .brand__mark {
+    width: 2rem;
+    height: 2.25rem;
+    object-fit: contain;
+  }
+
+  .brand__wordmarks {
+    position: relative;
+    display: block;
+    width: 6.7rem;
+    height: 2rem;
+  }
+
+  .brand__wordmark {
+    position: absolute;
+    inset: 0;
+    width: 6.7rem;
+    height: 2rem;
+    object-fit: contain;
+    object-position: left center;
+  }
+
+  .brand__wordmark--light-theme {
+    display: none;
+  }
+
+  :global(:root[data-theme='light']) .brand__wordmark--dark-theme {
+    display: none;
+  }
+
+  :global(:root[data-theme='light']) .brand__wordmark--light-theme {
+    display: block;
+  }
+
+  .site-nav__desktop,
+  .nav-links,
+  .nav-tools {
+    display: flex;
+    align-items: center;
+  }
+
+  .site-nav__desktop {
+    gap: 1.4rem;
+  }
+
+  .nav-links,
+  .mobile-links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nav-links {
+    gap: clamp(0.9rem, 1.7vw, 1.6rem);
+  }
+
+  .nav-links a {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: color var(--dur-fast) var(--ease);
+  }
+
+  .nav-links a:hover,
+  .nav-links a[aria-current='page'] {
+    color: var(--text-accent);
+  }
+
+  .nav-tools,
+  .mobile-tools {
+    gap: 0.6rem;
+  }
+
+  .language-link,
+  .theme-toggle,
+  .nav-toggle {
+    display: inline-flex;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-line);
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-family: var(--font-sans);
+    font-size: 0.76rem;
+    font-weight: 800;
+    transition:
+      border-color var(--dur-fast) var(--ease),
+      background var(--dur-fast) var(--ease),
+      color var(--dur-fast) var(--ease);
+  }
+
+  .language-link:hover,
+  .theme-toggle:hover,
+  .nav-toggle:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--text-accent);
+  }
+
+  .theme-toggle svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .theme-toggle__moon {
+    display: none;
+  }
+
+  :global(:root[data-theme='light']) .theme-toggle__sun {
+    display: none;
+  }
+
+  :global(:root[data-theme='light']) .theme-toggle__moon {
+    display: block;
+  }
+
+  .nav-toggle {
+    display: none;
+    border-radius: var(--radius-md);
+  }
+
+  .nav-toggle__lines {
+    display: grid;
+    gap: 0.26rem;
+  }
+
+  .nav-toggle__lines span {
+    width: 1.25rem;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    transition: transform var(--dur-med) var(--ease), opacity var(--dur-fast) var(--ease);
+  }
+
+  .nav-toggle[aria-expanded='true'] .nav-toggle__lines span:first-child {
+    transform: translateY(0.39rem) rotate(45deg);
+  }
+
+  .nav-toggle[aria-expanded='true'] .nav-toggle__lines span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav-toggle[aria-expanded='true'] .nav-toggle__lines span:last-child {
+    transform: translateY(-0.39rem) rotate(-45deg);
+  }
+
+  .mobile-navigation {
+    display: none;
+    border-top: 1px solid var(--border-line);
+    background: var(--nav-bg);
+  }
+
+  .mobile-navigation > .container {
+    padding-block: 1rem 1.25rem;
+  }
+
+  .mobile-links a {
+    display: flex;
+    min-height: 2.9rem;
+    align-items: center;
+    border-bottom: 1px solid var(--border-line);
+    color: var(--text-body);
+    font-weight: 600;
+  }
+
+  .mobile-links a[aria-current='page'] {
+    color: var(--text-accent);
+  }
+
+  .mobile-tools {
+    display: flex;
+    align-items: center;
+    padding-top: 1rem;
+  }
+
+  .language-link--wide {
+    width: auto;
+    gap: 0.5rem;
+    padding-inline: 0.9rem;
+  }
+
+  @media (max-width: 63.99rem) {
+    .site-nav__desktop {
+      display: none;
+    }
+
+    :global(.js) .nav-toggle {
+      display: inline-flex;
+    }
+
+    .mobile-navigation {
+      display: block;
+    }
+
+    :global(.js) .mobile-navigation {
+      display: none;
+    }
+
+    :global(.js) .mobile-navigation.is-open {
+      display: block;
+    }
+  }
+
+  @media (max-width: 24rem) {
+    .brand__wordmarks,
+    .brand__wordmark {
+      width: 5.8rem;
+    }
+  }
+</style>

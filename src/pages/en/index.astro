@@ -1,0 +1,11 @@
+---
+import HomePage from '../../components/pages/HomePage.astro';
+import { contentFor } from '../../i18n/site';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const t = contentFor('en').home;
+---
+
+<BaseLayout locale="en" route="home" title={t.metaTitle} description={t.metaDescription}>
+  <HomePage locale="en" />
+</BaseLayout>

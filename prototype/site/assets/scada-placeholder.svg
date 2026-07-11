@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Project screen placeholder</title>
+  <desc id="desc">A generic control-system diagram used until approved and sanitized project screens are available.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#101a2e"/>
+      <stop offset="1" stop-color="#16223a"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1200" height="675" rx="20" fill="url(#bg)"/>
+  <g fill="none" stroke="#233452" stroke-width="3">
+    <path d="M90 130h1020M90 545h1020"/>
+    <rect x="90" y="175" width="235" height="310" rx="14"/>
+    <rect x="365" y="175" width="330" height="310" rx="14"/>
+    <rect x="735" y="175" width="375" height="310" rx="14"/>
+  </g>
+  <g fill="#9db0cc" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="24" letter-spacing="3">
+    <text x="90" y="92">ANDOR • PROJECT SCREEN</text>
+    <text x="90" y="600">SANITIZED VISUAL PENDING APPROVAL</text>
+  </g>
+  <g fill="none" stroke="#4f9fd8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)">
+    <path d="M145 390v-95h125v95"/>
+    <circle cx="208" cy="292" r="22"/>
+    <path d="M430 395h80v-125h95v125h48"/>
+    <path d="M805 390h72v-120h86v120h78"/>
+  </g>
+  <g fill="#5fc08a">
+    <circle cx="145" cy="390" r="10"/><circle cx="270" cy="390" r="10"/>
+    <circle cx="430" cy="395" r="10"/><circle cx="653" cy="395" r="10"/>
+    <circle cx="805" cy="390" r="10"/><circle cx="1041" cy="390" r="10"/>
+  </g>
+</svg>
