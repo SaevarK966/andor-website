@@ -591,12 +591,12 @@ const MiniIcon = ({ children }) => (
 
 // [src, [isTitle,enTitle], [isCap,enCap]]
 const SHOTS = [
-  ["assets/scada-sundlaug.png", ["Sundlaug, hússtjórnunarkerfi", "Swimming pool, building control system"], ["Yfirlitsmynd með hitastýringu, efnaskömmtun (klór/pH) og sögulegu línuriti.", "Overview with temperature control, chemical dosing (chlorine/pH) and a historical trend."]],
-  ["assets/scada-loftraesing.png", ["Loftræsing salur, íþróttahús", "Ventilation, sports hall"], ["Loftmeðhöndlun með frískun, hitaendurvinnslu og rauntímavöktun rýma.", "Air handling with free cooling, heat recovery and real-time zone monitoring."]],
-  ["assets/scada-brunalokur.png", ["Brunalokur, skólabygging", "Fire dampers, school building"], ["Staða og sjálfvirkar prófanir á brunalokum í heilli álmu, með viðvörunum og handvirkri prófun.", "Status and automatic testing of fire dampers across a wing, with alarms and manual test."]],
-  ["assets/scada-buningsklefar.png", ["Búningsklefar, hússtjórnun", "Changing rooms, building control"], ["Lýsing, sturtur og gólfhiti í fjórum búningsklefum á einni mynd.", "Lighting, showers and floor heating for four changing rooms on one screen."]],
-  ["assets/scada-badvatn.png", ["Baðvatn og sturtur", "Shower-water system"], ["Hitastýring baðvatns með varmaskipti, hringrás og handvirkri upphitun á sturtum.", "Shower-water temperature control with heat exchanger, circulation and manual boost."]],
-  ["assets/scada-kennslustofa.png", ["Lýsingarstýring, kennslustofur", "Lighting control, classrooms"], ["Birtustig og senur (kennsla/TV) fyrir hverja stofu, stýrt af einni mynd.", "Dimming levels and scenes (teaching/TV) per classroom, controlled from one screen."]],
+  ["assets/scada-placeholder.svg", ["Sundlaug, hússtjórnunarkerfi", "Swimming pool, building control system"], ["Yfirlitsmynd með hitastýringu, efnaskömmtun (klór/pH) og sögulegu línuriti.", "Overview with temperature control, chemical dosing (chlorine/pH) and a historical trend."]],
+  ["assets/scada-placeholder.svg", ["Loftræsing salur, íþróttahús", "Ventilation, sports hall"], ["Loftmeðhöndlun með frískun, hitaendurvinnslu og rauntímavöktun rýma.", "Air handling with free cooling, heat recovery and real-time zone monitoring."]],
+  ["assets/scada-placeholder.svg", ["Brunalokur, skólabygging", "Fire dampers, school building"], ["Staða og sjálfvirkar prófanir á brunalokum í heilli álmu, með viðvörunum og handvirkri prófun.", "Status and automatic testing of fire dampers across a wing, with alarms and manual test."]],
+  ["assets/scada-placeholder.svg", ["Búningsklefar, hússtjórnun", "Changing rooms, building control"], ["Lýsing, sturtur og gólfhiti í fjórum búningsklefum á einni mynd.", "Lighting, showers and floor heating for four changing rooms on one screen."]],
+  ["assets/scada-placeholder.svg", ["Baðvatn og sturtur", "Shower-water system"], ["Hitastýring baðvatns með varmaskipti, hringrás og handvirkri upphitun á sturtum.", "Shower-water temperature control with heat exchanger, circulation and manual boost."]],
+  ["assets/scada-placeholder.svg", ["Lýsingarstýring, kennslustofur", "Lighting control, classrooms"], ["Birtustig og senur (kennsla/TV) fyrir hverja stofu, stýrt af einni mynd.", "Dimming levels and scenes (teaching/TV) per classroom, controlled from one screen."]],
 ];
 
 function Lightbox({ shot, onClose }) {
@@ -648,7 +648,7 @@ function ScreenshotGallery() {
         <Reveal delay={100}>
         <div style={{ display: "grid", gap: 22, gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px),1fr))", marginTop: 42 }}>
           {SHOTS.map((shot) => (
-            <figure key={shot[0]} style={{ margin: 0 }}>
+            <figure key={shot[1][0]} style={{ margin: 0 }}>
               <button
                 onClick={() => setOpen(shot)}
                 style={{ display: "block", width: "100%", padding: 0, border: "1px solid var(--border)", borderRadius: "var(--radius-md)", overflow: "hidden", background: "#8a939c", cursor: "zoom-in", position: "relative" }}

@@ -108,7 +108,7 @@ Success state: "Takk fyrir!" / "Thank you!" — "Við höfum samband við þig f
 - **Brand:** andor-mark.svg, andor-wordmark-light.png, andor-wordmark-dark.png
 - **Products / logos:** mybox-render.png, MyPanel.webp, myscada-logo-blue.png, myscada-logo-white.png, styriteikning-daemi.png (control-drawing art)
 - **Partners:** partner-{akureyrarbaer,hafnarfjordur,ccep,siemens}-ink-{light,dark}.png
-- **SCADA screenshots:** scada-{sundlaug,loftraesing,brunalokur,buningsklefar,badvatn,kennslustofa}.png
+- **SCADA screenshots:** raw `scada-*.png` files stay local and are Git-ignored until customer permission and redaction review are complete. The public prototype uses `scada-placeholder.svg` in their place.
 - **Team:** team-stefan.jpg, team-saevar.jpg, team-mary.jpg
 
 All partner logos and product renders belong to their owners (Akureyrarbær, Hafnarfjörður, CCEP, Siemens, mySCADA) — confirm usage rights before publishing.
